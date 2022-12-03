@@ -141,85 +141,45 @@
         </div>
         <div :class="[isOpen ? '' : 'hidden', 'md:hidden']">
           <div class="px-2 pt-2 pb-3 sm:px-3">
-            <a
-              href="#"
-              class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
-              >Dashboard</a
+            <NuxtLink
+              to="/"
+              class="block px-3 py-2 rounded-md text-base text-gray-300 font-medium text-white hover:text-white hover:bg-[#00c853] focus:outline-none focus:text-white focus:bg-[#00c853]"
+              >خانه</NuxtLink
             >
-            <a
-              href="#"
-              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-              >Team</a
+            <NuxtLink
+              to="/product"
+              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#00c853] focus:outline-none focus:text-white focus:bg-[#00c853]"
+              >محصولات</NuxtLink
             >
-            <a
-              href="#"
-              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-              >Projects</a
+            <NuxtLink
+              to="/service"
+              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#00c853] focus:outline-none focus:text-white focus:bg-[#00c853]"
+              >خدمات</NuxtLink
             >
-            <a
-              href="#"
-              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-              >Calendar</a
+            <NuxtLink
+              to="/blog"
+              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#00c853] focus:outline-none focus:text-white focus:bg-[#00c853]"
+              >وبلاگ</NuxtLink
             >
-            <a
-              href="#"
-              class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-              >Reports</a
-            >
-          </div>
-          <div class="pt-4 pb-3 border-t border-gray-700">
-            <div class="flex items-center px-5">
-              <div class="flex-shrink-0">
-                <img
-                  class="h-10 w-10 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt
-                />
-              </div>
-              <div class="ml-3">
-                <div class="text-base font-medium leading-none text-white">
-                  Tom Cook
-                </div>
-                <div
-                  class="mt-1 text-sm font-medium leading-none text-gray-400"
-                >
-                  tom@example.com
-                </div>
-              </div>
-            </div>
-            <div class="mt-3 px-2">
-              <a
-                href="#"
-                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                >Your Profile</a
-              >
-              <a
-                href="#"
-                class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                >Settings</a
-              >
-              <a
-                href="#"
-                class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                >Sign out</a
-              >
-            </div>
           </div>
         </div>
       </nav>
 
       <header class="bg-white mt-10">
-        <div class="text-right max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          dir="rtl"
+          class="text-right max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+          <NuxtLink to="/" class="leading-tight text-gray-900 mr-10">
+            خانه</NuxtLink
+          >
+          <span v-if="$route.path !== '/'"> {{ ">" }}</span>
           <span
             v-if="$route.path !== '/'"
             class="leading-tight text-[#00c853] mr-2"
           >
-            {{ $route.path }}
+            {{ roterName }}
           </span>
-          <span v-if="$route.path !== '/'"> {{ "<" }}</span>
-          <NuxtLink to="/" class="leading-tight text-gray-900 mr-10">
-            خانه</NuxtLink
-          >
         </div>
       </header>
     </div>
@@ -243,7 +203,7 @@
               <form class="mt-10" action="#3">
                 <div dir="rtl" class="mb-4 last:mb-0">
                   <div class="relative mb-6">
-                    <label for="userName">نام کاربری</label>
+                    <label :class="[haseError ? 'text-[#FF2424]' : '']" for="userName">نام کاربری</label>
 
                     <div class="relative group mt-1 rounded-md">
                       <input
@@ -252,7 +212,10 @@
                         name="price"
                         v-model="username"
                         :class="[
-                          username.length > 0 ? 'border-black' : 'border-white',haseError?'border-red':'',
+                          username.length > 0
+                            ? 'border-[#000000]'
+                            : 'border-white',
+                          haseError ? 'login-input-has-error' : '',
                         ]"
                         class="text-right block login-input w-full pl-7 pr-12 caret focus:pr-12 focus:caret-[#00C853] sm:text-sm"
                         id="userName"
@@ -261,6 +224,7 @@
                       <div class="search-icon-container">
                         <span class="text-[#7B7B7B] sm:text-sm">
                           <svg
+                            :class="[haseError ? 'stroke-[#FF2424]' : '']"
                             class="svg-icon stroke-[#7B7B7B] group-focus-within:stroke-[#00C853] search-icon"
                             viewBox="0 0 24 24"
                           >
@@ -281,7 +245,7 @@
                 </div>
                 <div dir="rtl" class="mb-4 last:mb-0">
                   <div class="relative mb-6">
-                    <label for="userPassword">رمز عبور</label>
+                    <label :class="[haseError ? 'text-[#FF2424]' : '']" for="userPassword">رمز عبور</label>
 
                     <div class="relative group mt-1 rounded-md">
                       <button
@@ -324,6 +288,7 @@
                         dir="rtl"
                         name="price"
                         v-model="password"
+                        :class="[haseError ? 'login-input-has-error' : '']"
                         class="text-right block login-input w-full pl-7 pr-12 caret focus:pr-12 focus:caret-[#00C853] sm:text-sm"
                         id="userPassword"
                         :type="showPass ? 'text' : 'password'"
@@ -332,6 +297,7 @@
                       <div class="search-icon-container">
                         <span class="text-[#7B7B7B] sm:text-sm">
                           <svg
+                            :class="[haseError ? 'stroke-[#FF2424]' : '']"
                             class="svg-icon stroke-[#7B7B7B] group-focus-within:stroke-[#00C853] search-icon"
                             viewBox="0 0 24 24"
                           >
@@ -354,20 +320,17 @@
                 <div class="flex justify-end mb-4 last:mb-0">
                   <div class="mr-4 w-full last:mr-0">
                     <button
-                    type="button"
-                    @click.stop="login"
+                      type="button"
+                      @click.stop="login"
                       class="text-center fill-btn w-full items-center no-underline transition leading-none select-none outline-none focus:outline-none relative text-white h-10 px-4 text-base rounded"
                     >
-                    
-                        <svg
+                      <svg
                         v-if="isSubmit"
-                          class="animate-spin h-5 w-5 mr-3 ..."
-                          viewBox="0 0 24 24"
-                        >
-                          <!-- ... -->
-                        </svg>
-                    
-                      
+                        class="animate-spin h-5 w-5 mr-3 ..."
+                        viewBox="0 0 24 24"
+                      >
+                        <!-- ... -->
+                      </svg>
 
                       <span v-else>ورود</span>
                     </button>
@@ -393,7 +356,7 @@ export default {
     };
   },
   setup() {
-    const isSubmit=ref(false)
+    const isSubmit = ref(false);
     const showPass = ref(false);
     const modalShow = ref(false);
     const username = ref("");
@@ -407,34 +370,40 @@ export default {
     };
     const showPassIcon = () => {
       showPass.value = !showPass.value;
-      console.log("hiii2", showPass.value);
     };
-    const login=async ()=>{
-      isSubmit.value=true
-      try {
-        const res = await $fetch(`https://challenge.webjar.ir/auth/login`, {
-     
-     // Adding method type
-     method: "POST",
-      
-     // Adding body or contents to send
-     body: JSON.stringify({
-      userName: username.value,
-         password: password.value,
-     }),
-      
-    
- });
-        // const data = await res.json();
-        
-        console.log("hiii", res);
-        isSubmit.value=false
-      } catch (err) {
-        console.log("err", err);
-        haseError.value=true
-        isSubmit.value=false
-      }
-    }
+    const login = async () => {
+      isSubmit.value = true;
+
+      await $fetch(`https://challenge.webjar.ir/auth/login`, {
+        // Adding method type
+        method: "POST",
+
+        // Adding body or contents to send
+        body: JSON.stringify({
+          userName: username.value,
+          password: password.value,
+        }),
+      })
+        .then((response) => {
+          console.log("response", response);
+          haseError.value = false;
+          modalShow.value = false;
+          isSubmit.value = false;
+          username.value = "";
+          password.value = "";
+          localStorage.setItem("accessToken", response.token.accessToken);
+          localStorage.setItem("refreshToken", response.token.refreshToken);
+        })
+        .catch((error) => {
+          // this.errorMessage = error;
+          if (error) {
+            console.error("There was an error!", error);
+            haseError.value = true;
+
+            isSubmit.value = false;
+          }
+        });
+    };
     return {
       modalShow,
       onShowModal,
@@ -445,15 +414,25 @@ export default {
       password,
       login,
       isSubmit,
-      haseError
+      haseError,
     };
   },
   mounted() {
-    console.log("this.$route", this.$route);
   },
   methods: {
     toggle() {
       this.isOpen = !this.isOpen;
+    },
+  },
+  computed: {
+    roterName() {
+      if (this.$route.path == "/blog") {
+        return "بلاگ";
+      } else if (this.$route.path == "/service") {
+        return "خدمات";
+      } else if (this.$route.path == "/product") {
+        return "محصولات";
+      }
     },
   },
 };
@@ -485,5 +464,8 @@ export default {
     border: 1px solid #00c853;
     outline: none;
   }
+}
+.login-input-has-error {
+  border: 1px solid rgb(255, 36, 36);
 }
 </style>

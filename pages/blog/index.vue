@@ -5,7 +5,7 @@
     >
       وبلاگ
     </h1>
-    <div class="w-2/5 mt-8 mx-auto">
+    <div class="md:w-2/5 sm:w-full mt-8 mx-auto">
       <SearchInput @filterPost="searchPost"></SearchInput>
     </div>
     <select class="md:hidden" v-model="selectedCategories[0]">
@@ -18,11 +18,11 @@
         {{ category.name }}
       </option>
     </select>
-    <div class="container pl-20">
+    <div class=" pl-5 pr-5 md:pr-5 md:pl-5 lg:pr-20 lg:pl-20">
       <div class="relative grid grid-cols-4 min-h-screen">
         <!-- container for all cards -->
         <main
-          class="bg-white col-span-4 sm:col-span-4 md:col-span-3 min-h-[150vh]"
+         v-if="(posts)" class="bg-white col-span-4 sm:col-span-4 md:col-span-3 min-h-[150vh]"
         >
           <!-- card -->
           <div
@@ -149,7 +149,6 @@ export default {
   components: { SearchInput, Paginate },
   data() {
     return {
-      xxx: [],
       isOpen: false,
       postIndex: 0,
     };
@@ -176,7 +175,6 @@ export default {
       let values = selectedCategories.value[0]
         ? "?category=" + selectedCategories.value[0]
         : "";
-      console.log("values", values);
       return values;
     });
     const {
@@ -184,20 +182,16 @@ export default {
       pending,
       refresh,
     } = useFetch(() => `https://challenge.webjar.ir/posts${queryString.value}`);
-    console.log("queryString.value", queryString.value);
-    console.log("posts", posts);
     // fetch a single country
     // getSingleCountry(route.params.name);
 
     const clickCallback = (page) => {
       postIndex.value = page * 4 - 4;
-      console.log(page);
       //   this.fitleredPost()
     };
 
     const setOptions = (e, key) => {
       change.value = false;
-      console.log("چگد:", e.target.checked);
       if (!e.target.checked) {
         selectedCategories.value = [];
         change.value = true;
@@ -210,23 +204,20 @@ export default {
     // // return all language names
     const curentPostLists = computed(() => {
       postIndex;
-      var xxx = [];
-      console.log(postIndex);
+      var helperArray = [];
       var x =
         searchText.value == ""
           ? posts.value
           : posts.value.filter(function (post) {
               return post.title.includes(searchText.value);
             });
-      console.log("xxxxx", x);
       pageCount.value = Math.ceil(Number(x.length / 4));
       x.forEach((post, index) => {
         if (index >= postIndex.value && index < postIndex.value + 4) {
-          xxx.push(post);
+          helperArray.push(post);
         }
       });
-      console.log("curentPostLists", [...xxx]);
-      return [...xxx];
+      return [...helperArray];
     });
 
     // // return all currency names
@@ -251,7 +242,6 @@ export default {
     watch(
       () => posts.value,
       () => {
-        console.log("postIndex.value", postIndex.value);
         postIndex.value = 5;
         postIndex.value = 0;
         getPostCount();
@@ -269,7 +259,6 @@ export default {
         const res = await $fetch(`https://challenge.webjar.ir/post-categories`);
         // const data = await res.json();
         categories.value = res;
-        console.log("hiii", res);
       } catch (err) {}
     };
     const getPostCount = async () => {
@@ -280,7 +269,6 @@ export default {
         );
         // const data = await res.json();
         pageCount.value = Math.ceil(Number(res / 4));
-        console.log("hiii", res);
       } catch (err) {}
     };
     const searchPost = (searchTextt) => {
